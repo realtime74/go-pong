@@ -21,17 +21,21 @@ func NewRacket(screen tcell.Screen, x, y int) *Racket {
 	}
 }
 
+func (r *Racket) Position() (dx, dy int) {
+	return r.x, r.y
+}
+
 func (r *Racket) Move(dy int) {
 	r.Clear()
 
 	_, height := r.screen.Size()
 	r.y += dy
-	miny := RacketHeight / 2
-	maxy := height - RacketHeight/2
-	if r.y < miny {
+	miny := 1 + RacketHeight/2
+	maxy := height - 2 - RacketHeight/2
+	if r.y <= miny {
 		r.y = miny
 	}
-	if r.y > maxy {
+	if r.y >= maxy {
 		r.y = maxy
 	}
 	r.Draw()

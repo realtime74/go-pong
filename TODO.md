@@ -74,6 +74,13 @@
     - [x] use vector for ball movement
 - [x] fix bounce in wrong direction
 
+# add computer player
+
+- [x] moves left cursor autonomically
+    -   only allowed to watch and move
+        every 10 ticks
+    - sees only current ball position
+
 ------
 
 
