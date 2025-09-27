@@ -35,3 +35,33 @@
 - [x] move the player's racket up and down
       using the j/k keys
 
+# ball
+
+- [x] draw the ball in the middle of the screen
+    - [x] create a ball struct
+    - [x] create a function to draw the ball
+- [x] let the ball move to the right
+    - [x] create a goroutine to move the ball
+    - [x] update ball position in the loop
+- [x] bounce off the walls
+    - [x] for the moment,
+          let the ball just bounce of the walls
+
+- [x] create game controller
+    - [x] move ball bounce logic to
+          game controller 
+- [x] bounce off the racket
+    - [x] detect collision with the racket
+    - [x] change ball direction on collision
+
+- [x] detect scoring
+    - [x] detect when the ball goes past a racket
+    - [x] flash a red bottom line on the screen
+
+- [ ] refactor
+    - [ ] move game logic to a separate module
+
+- [ ] measure score
+    - [ ] create a footer bar
+    - [ ] keep track of the score for both players
+    - [ ] display the score in the footer bar

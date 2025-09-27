@@ -37,6 +37,13 @@ func (r *Racket) Move(dy int) {
 	r.Draw()
 }
 
+func (r *Racket) OnRacket(x, y int) bool {
+	if x != r.x {
+		return false
+	}
+	return y > r.y-RacketHeight/2 && y < r.y+RacketHeight/2
+}
+
 func (r *Racket) Clear() {
 	scr.HFill(
 		r.screen,
