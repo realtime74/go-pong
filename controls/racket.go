@@ -6,7 +6,8 @@ import (
 )
 
 type Racket struct {
-	x, y int
+	x, y     int
+	LastMove int
 
 	screen tcell.Screen
 }
@@ -25,7 +26,7 @@ func (r *Racket) Position() (dx, dy int) {
 	return r.x, r.y
 }
 
-func (r *Racket) Move(dy int) {
+func (r *Racket) Move(tick int, dy int) {
 	r.Clear()
 
 	_, height := r.screen.Size()

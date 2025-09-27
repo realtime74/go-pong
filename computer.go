@@ -9,7 +9,7 @@ func Start(g *Game) {
 }
 
 func ComputerMove(g *Game) {
-	ticker := time.NewTicker(600 * time.Millisecond)
+	ticker := time.NewTicker(250 * time.Millisecond)
 	defer ticker.Stop()
 
 	for range ticker.C {
@@ -17,9 +17,9 @@ func ComputerMove(g *Game) {
 		_, ry := g.lracket.Position()
 
 		if by < ry {
-			g.lracket.Move(-1)
+			g.lracket.Move(g.ticker, -1)
 		} else {
-			g.lracket.Move(1)
+			g.lracket.Move(g.ticker, 1)
 		}
 	}
 }

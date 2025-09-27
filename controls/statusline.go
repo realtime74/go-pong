@@ -21,13 +21,9 @@ func NewStatusLine(screen tcell.Screen) *StatusLine {
 	}
 }
 
-func (tb *StatusLine) Score(left, right bool) (x, y int) {
-	if left {
-		tb.lScore++
-	}
-	if right {
-		tb.rScore++
-	}
+func (tb *StatusLine) Score(left, right int) (x, y int) {
+	tb.lScore += left
+	tb.rScore += right
 	tb._flash()
 	return tb.lScore, tb.rScore
 }

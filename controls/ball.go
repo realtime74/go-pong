@@ -27,8 +27,13 @@ func NewBall(screen tcell.Screen, x, y int) *Ball {
 	return b
 }
 
+func (b *Ball) ResetAngle() {
+	b.dx = (b.dx / b.dx) * 10
+	b.dy = b.dy / b.dy
+}
+
 func (b *Ball) NextPosition(tick int) (x, y int) {
-	t := float64(tick-b.t0) / 10.0
+	t := float64(tick-b.t0) / 50.0
 	dx := int(float64(b.dx) * t)
 	dy := int(float64(b.dy) * t)
 
@@ -41,15 +46,11 @@ func (b *Ball) Move(ticker int) {
 	b.Draw()
 }
 
-func (b *Ball) Bounce(tick int, x, y bool) {
+func (b *Ball) Bounce(tick int, dx, dy int) {
 	b.bx = b.x
 	b.by = b.y
-	if x {
-		b.dx = -b.dx
-	}
-	if y {
-		b.dy = -b.dy
-	}
+	b.dx *= dx
+	b.dy *= dy
 	b.t0 = tick
 }
 

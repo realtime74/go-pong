@@ -81,6 +81,12 @@
         every 10 ticks
     - sees only current ball position
 
+# racket dynamics
+
+- [x] if a player moved the racket 250ms
+      before the bounce, the ball should
+        bounce off in a different angle
+
 ------
 
 

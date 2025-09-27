@@ -14,16 +14,14 @@ func _loop(game Game) bool {
 		switch ev.Key() {
 		case tcell.KeyEscape, tcell.KeyCtrlC:
 			return false
-		case tcell.KeyUp:
-			game.rracket.Move(-1)
 		}
 		switch ev.Rune() {
 		case 'q':
 			return false
 		case 'k':
-			game.rracket.Move(-1)
+			game.rracket.Move(game.ticker, -1)
 		case 'j':
-			game.rracket.Move(1)
+			game.rracket.Move(game.ticker, 1)
 		}
 	}
 

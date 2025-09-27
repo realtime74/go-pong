@@ -50,23 +50,55 @@ func (g *Game) CheckBounds(tick int) {
 	width, height := g.screen.Size()
 	x, y := g.ball.NextPosition(g.ticker)
 
-	if g.rracket.OnRacket(x, y) || g.lracket.OnRacket(x, y) {
-		g.ball.Bounce(tick, true, false)
+	if x <= 0 {
+		g.status.Score(0, 1)
+		//g.ball.ResetAngle()
+		g.ball.Bounce(tick, -1, 1)
 		return
 	}
-	if x <= 0 || x >= width || y <= 0 || y >= height-1 {
-		g.status.Score(x >= width, x <= 0)
-		g.ball.Bounce(tick, x <= 0 || x >= width, y <= 0 || y >= height-1)
+	if x >= width {
+		g.status.Score(1, 0)
+		//g.ball.ResetAngle()
+		g.ball.Bounce(tick, -1, 1)
 		return
 	}
+	if y <= 0 || y >= height-1 {
+		g.ball.Bounce(tick, 1, -1)
+		return
+	}
+
+	if g.rracket.OnRacket(x, y) {
+		dx, dy := -1, 1
+		if g.ticker-g.rracket.LastMove < 500 {
+			dx, dy = -1, 2
+		} else {
+			//g.ball.ResetAngle()
+		}
+		g.ball.Bounce(tick, dx, dy)
+		return
+	}
+	if g.lracket.OnRacket(x, y) {
+		dx, dy := -1, 1
+		if g.ticker-g.lracket.LastMove < 500 {
+			dx, dy = -1, 2
+		} else {
+			//g.ball.ResetAngle()
+		}
+		g.ball.Bounce(tick, dx, dy)
+		return
+	}
+
 }
 
 func (g *Game) _controller() {
-	ticker := time.NewTicker(50 * time.Millisecond)
+	ticker := time.NewTicker(10 * time.Millisecond)
 	for range ticker.C {
-		g.CheckBounds(g.ticker)
-		g.ball.Move(g.ticker)
-		g.screen.Show()
 		g.ticker++
+		if g.ticker%5 == 0 {
+			g.CheckBounds(g.ticker)
+			g.ball.Move(g.ticker)
+			g.screen.Show()
+			g.ticker++
+		}
 	}
 }
