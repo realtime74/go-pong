@@ -5,11 +5,11 @@ import (
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/realtime74/gopong/controls"
-	"github.com/realtime74/gopong/scr"
 )
 
 type Game struct {
-	title controls.TitleBar
+	title  controls.TitleBar
+	status controls.StatusLine
 
 	lracket *controls.Racket
 	rracket *controls.Racket
@@ -34,6 +34,9 @@ func NewGame(screen tcell.Screen) Game {
 	game.lracket.Draw()
 	game.ball = controls.NewBall(screen, width/2, height/2)
 	game.ball.Draw()
+	game.status = *controls.NewStatusLine(screen)
+	game.status.Draw()
+
 	return game
 }
 
@@ -45,7 +48,7 @@ func (g *Game) CheckBounds() {
 	width, height := g.screen.Size()
 	x, y := g.ball.NextPosition()
 	if x <= 0 || x >= width || y <= 0 || y >= height-1 {
-		scr.Flash(g.screen)
+		g.status.Score(x >= width, x <= 0)
 		g.ball.Bounce()
 		return
 	}

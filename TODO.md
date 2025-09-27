@@ -58,10 +58,10 @@
     - [x] detect when the ball goes past a racket
     - [x] flash a red bottom line on the screen
 
-- [ ] refactor
-    - [ ] move game logic to a separate module
+- [x] refactor
+    - [x] move game logic to a separate module
 
-- [ ] measure score
-    - [ ] create a footer bar
-    - [ ] keep track of the score for both players
-    - [ ] display the score in the footer bar
+- [x] measure score
+    - [x] create a footer bar
+    - [x] keep track of the score for both players
+    - [x] display the score in the footer bar
