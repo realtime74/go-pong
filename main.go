@@ -5,13 +5,10 @@ import (
 	"time"
 
 	"github.com/gdamore/tcell/v2"
-)
 
-func drawText(screen tcell.Screen, x, y int, text string, style tcell.Style) {
-	for i, r := range text {
-		screen.SetContent(x+i, y, r, nil, style)
-	}
-}
+	"github.com/realtime74/gopong/controls"
+	"github.com/realtime74/gopong/scr"
+)
 
 func main() {
 	screen, err := tcell.NewScreen()
@@ -31,7 +28,10 @@ func main() {
 	screen.SetStyle(style)
 
 	text := "Hello, World!"
-	drawText(screen, width/2-len(text)/2, height/2, text, style)
+	scr.DrawText(screen, width/2-len(text)/2, height/2, text, style)
+
+	titlebar := controls.NewTitleBar(screen, "go-pong")
+	titlebar.Draw()
 
 	screen.Show()
 	time.Sleep(10 * time.Second)

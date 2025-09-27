@@ -18,7 +18,9 @@
 
 # title bar
 
-- [ ] create a title bar at the top of the screen
+- [x] create a title bar at the top of the screen
+    - [x] let titlebar consume the full width of the screen
+    - [ ] choose a smarter color
 - [ ] display "go-pong" in the title bar
 
 

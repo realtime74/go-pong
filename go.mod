@@ -1,4 +1,4 @@
-module github.com/realtime74/go-pong
+module github.com/realtime74/gopong
 
 go 1.25.1
 
