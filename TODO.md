@@ -65,3 +65,16 @@
     - [x] create a footer bar
     - [x] keep track of the score for both players
     - [x] display the score in the footer bar
+
+# ball vector
+
+- [x] game makes much more fun if ball can fly
+      in different angles
+    - [x] create a vector struct
+    - [x] use vector for ball movement
+- [x] fix bounce in wrong direction
+
+------
+
+
+

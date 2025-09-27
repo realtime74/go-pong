@@ -17,6 +17,7 @@ type Game struct {
 	ball *controls.Ball
 
 	screen tcell.Screen
+	ticker int
 }
 
 func NewGame(screen tcell.Screen) Game {
@@ -44,16 +45,17 @@ func (g *Game) Start() {
 	go g._controller()
 }
 
-func (g *Game) CheckBounds() {
+func (g *Game) CheckBounds(tick int) {
 	width, height := g.screen.Size()
-	x, y := g.ball.NextPosition()
-	if x <= 0 || x >= width || y <= 0 || y >= height-1 {
-		g.status.Score(x >= width, x <= 0)
-		g.ball.Bounce()
+	x, y := g.ball.NextPosition(g.ticker)
+
+	if g.rracket.OnRacket(x, y) || g.lracket.OnRacket(x, y) {
+		g.ball.Bounce(tick, true, false)
 		return
 	}
-	if g.rracket.OnRacket(x, y) || g.lracket.OnRacket(x, y) {
-		g.ball.Bounce()
+	if x <= 0 || x >= width || y <= 0 || y >= height-1 {
+		g.status.Score(x >= width, x <= 0)
+		g.ball.Bounce(tick, x <= 0 || x >= width, y <= 0 || y >= height-1)
 		return
 	}
 }
@@ -61,8 +63,9 @@ func (g *Game) CheckBounds() {
 func (g *Game) _controller() {
 	ticker := time.NewTicker(50 * time.Millisecond)
 	for range ticker.C {
-		g.CheckBounds()
-		g.ball.Move()
+		g.CheckBounds(g.ticker)
+		g.ball.Move(g.ticker)
 		g.screen.Show()
+		g.ticker++
 	}
 }

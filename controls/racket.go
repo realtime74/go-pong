@@ -11,7 +11,7 @@ type Racket struct {
 	screen tcell.Screen
 }
 
-const RacketHeight = 5
+const RacketHeight = 3
 
 func NewRacket(screen tcell.Screen, x, y int) *Racket {
 	return &Racket{
@@ -41,7 +41,7 @@ func (r *Racket) OnRacket(x, y int) bool {
 	if x != r.x {
 		return false
 	}
-	return y > r.y-RacketHeight/2 && y < r.y+RacketHeight/2
+	return y >= r.y-RacketHeight/2 && y <= r.y+RacketHeight/2
 }
 
 func (r *Racket) Clear() {
