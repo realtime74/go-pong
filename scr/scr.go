@@ -12,6 +12,16 @@ func Fill(
 	}
 }
 
+func HFill(
+	screen tcell.Screen,
+	x, y, height int,
+	ch rune,
+	style tcell.Style) {
+	for i := 0; i < height; i++ {
+		screen.SetContent(x, y+i, ch, nil, style)
+	}
+}
+
 func DrawText(
 	screen tcell.Screen,
 	x, y int, text string,

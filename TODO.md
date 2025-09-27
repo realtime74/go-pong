@@ -20,8 +20,18 @@
 
 - [x] create a title bar at the top of the screen
     - [x] let titlebar consume the full width of the screen
-    - [ ] choose a smarter color
-- [ ] display "go-pong" in the title bar
+    - [x] choose a smarter color
+- [x] display "go-pong" in the title bar
 
+# racket
 
+- [x] draw the player's racket
+      on the right side of the screen
+- [x] draw the other player's racket
+      on the left side of the screen
+
+# interaction
+
+- [x] move the player's racket up and down
+      using the j/k keys
 
