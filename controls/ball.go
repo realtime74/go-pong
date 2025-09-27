@@ -9,6 +9,7 @@ type Ball struct {
 	dx, dy int
 	bx, by int
 	t0     int
+	level  int
 
 	screen tcell.Screen
 }
@@ -21,6 +22,7 @@ func NewBall(screen tcell.Screen, x, y int) *Ball {
 		by:     y,
 		dx:     10,
 		dy:     1,
+		level:  15,
 		screen: screen,
 	}
 
@@ -33,7 +35,7 @@ func (b *Ball) ResetAngle() {
 }
 
 func (b *Ball) NextPosition(tick int) (x, y int) {
-	t := float64(tick-b.t0) / 50.0
+	t := float64(tick-b.t0) / (1000.0 / float64(b.level))
 	dx := int(float64(b.dx) * t)
 	dy := int(float64(b.dy) * t)
 

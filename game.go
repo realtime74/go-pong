@@ -43,7 +43,8 @@ func NewGame(screen tcell.Screen) Game {
 
 func (g *Game) Start() {
 	go g._controller()
-	go ComputerMove(g)
+	go ComputerMove(g, g.lracket)
+	go ComputerMove(g, g.rracket)
 }
 
 func (g *Game) CheckBounds(tick int) {

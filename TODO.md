@@ -87,6 +87,28 @@
       before the bounce, the ball should
         bounce off in a different angle
 
+# second ai player
+
+- [x] add a second ai player
+- [x] chill down player
+    - avoid moving if panel covers ball
+
+# fixes
+
+- [x] move bar away if ball is behind
+= [x] smart avoid logic
+        (move away from ball y)
+
+# leveling
+
+
+# idea: pedals???
+
+# later
+
+- [ ] disallow bar to move into ball
+    (avoidance logic already there)
+
 ------
 
 
