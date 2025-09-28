@@ -95,7 +95,7 @@ func (g *Game) CheckBounds(tick int) {
 
 	// wall bounce
 	leftBounce := x <= 0
-	rightBounce := x >= width
+	rightBounce := x >= width-1
 	topBounce := y <= 0
 	bottomBounce := y >= height-1
 
@@ -139,7 +139,6 @@ func (g *Game) _controller() {
 	ticker := time.NewTicker(10 * time.Millisecond)
 	for range ticker.C {
 		g.ticker++
-		g.status.SetTicker(g.ticker / 100)
 
 		if g.ball.Level > g.options.levelCap {
 			g.screen.PostEvent(tcell.NewEventKey(tcell.KeyEscape, 0, tcell.ModNone))
@@ -154,12 +153,10 @@ func (g *Game) _controller() {
 			g.ball.Level += 1
 			g.status.SetLevel(g.ball.Level, true)
 		}
-		// Move the ball every 5 ticks (50ms)
-		if g.ticker%5 == 0 {
-			g.CheckBounds(g.ticker)
-			g.ball.Move(g.ticker)
-			g.screen.Show()
-			g.ticker++
-		}
+		// Move the ball faster
+		g.CheckBounds(g.ticker)
+		g.ball.Move(g.ticker)
+		g.screen.Show()
+		g.ticker++
 	}
 }
