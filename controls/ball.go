@@ -90,6 +90,9 @@ func (b *Ball) Bounce(tick int, dx, dy int) {
 	b.by = b.y
 	b.dx *= dx
 	b.dy *= dy
+	if b.dy > 100 {
+		b.dy = 100
+	}
 	b.t0 = tick
 }
 

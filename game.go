@@ -148,8 +148,7 @@ func (g *Game) _controller() {
 			g.screen.PostEvent(tcell.NewEventKey(tcell.KeyEscape, 0, tcell.ModNone))
 		}
 
-		// level up every 3000 ticks
-		if g.ticker%3000 == 0 {
+		if g.ticker%1400 == 0 {
 			g.ball.Level += 1
 			g.status.SetLevel(g.ball.Level, true)
 		}
@@ -157,6 +156,5 @@ func (g *Game) _controller() {
 		g.CheckBounds(g.ticker)
 		g.ball.Move(g.ticker)
 		g.screen.Show()
-		g.ticker++
 	}
 }
