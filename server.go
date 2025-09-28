@@ -57,7 +57,8 @@ func (s *RESTServer) _move(c *gin.Context) {
 
 func (s *RESTServer) _game(c *gin.Context) {
 	gs := s.game.Status()
-	cx, cy := s.game.rracket.Position()
+	rcx, rcy := s.game.rracket.Position()
+	lcx, lcy := s.game.lracket.Position()
 	c.JSON(200, gin.H{
 		"scoreLeft":    gs.scoreLeft,
 		"scoreRight":   gs.scoreRight,
@@ -65,8 +66,10 @@ func (s *RESTServer) _game(c *gin.Context) {
 		"ballY":        gs.ballY,
 		"screenWidth":  gs.screenWidth,
 		"screenHeight": gs.screenHeight,
-		"cursorX":      cx,
-		"cursorY":      cy,
+		"lCursorX":     lcx,
+		"lCursorY":     lcy,
+		"rCursorX":     rcx,
+		"rCursorY":     rcy,
 		"level":        s.game.ball.Level,
 	})
 }

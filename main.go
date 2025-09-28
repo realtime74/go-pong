@@ -61,6 +61,8 @@ func main() {
 
 	for ii, value := range os.Args[1:] {
 		switch value {
+		case "-0":
+			options.computerPlayers = 0
 		case "-1":
 			options.computerPlayers = 1
 		case "-2":
