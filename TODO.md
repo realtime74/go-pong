@@ -119,8 +119,9 @@
     - [x] how to connect players
     - [x] let user just control one racket
     - [x] create a simple python client to connect to the game server
-    - [ ] let user control up/down with j/k keys
-    - [ ] how to report game state to user?
+    - [x] let user control up/down with j/k keys
+    - [x] how to report game state to user?
+    - [ ] implement basic client-side AI
 
 
 

@@ -25,10 +25,11 @@ func (s *RESTServer) Start() error {
 	defer f.Close()
 
 	// very stupid move handler
-	router.GET("/player1/move/up", s._move)
-	router.GET("/player1/move/down", s._move)
-	router.GET("/player2/move/up", s._move)
-	router.GET("/player2/move/down", s._move)
+	router.POST("/player1/move/up", s._move)
+	router.POST("/player1/move/down", s._move)
+	router.POST("/player2/move/up", s._move)
+	router.POST("/player2/move/down", s._move)
+	router.GET("/game", s._game)
 
 	go router.Run(":8887")
 	return nil
@@ -51,5 +52,21 @@ func (s *RESTServer) _move(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"status": "ok",
+	})
+}
+
+func (s *RESTServer) _game(c *gin.Context) {
+	gs := s.game.Status()
+	cx, cy := s.game.rracket.Position()
+	c.JSON(200, gin.H{
+		"scoreLeft":    gs.scoreLeft,
+		"scoreRight":   gs.scoreRight,
+		"ballX":        gs.ballX,
+		"ballY":        gs.ballY,
+		"screenWidth":  gs.screenWidth,
+		"screenHeight": gs.screenHeight,
+		"cursorX":      cx,
+		"cursorY":      cy,
+		"level":        s.game.ball.Level,
 	})
 }

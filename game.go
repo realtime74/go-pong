@@ -22,6 +22,15 @@ type Game struct {
 	options GameOptions
 }
 
+type GameStatus struct {
+	scoreLeft    int
+	scoreRight   int
+	ballX        int
+	ballY        int
+	screenHeight int
+	screenWidth  int
+}
+
 type GameOptions struct {
 	computerPlayers int
 	startLevel      int
@@ -59,6 +68,15 @@ func (g *Game) Start() {
 	if g.options.computerPlayers > 1 {
 		go ComputerMove(g, g.rracket)
 	}
+}
+
+func (g *Game) Status() GameStatus {
+	gs := GameStatus{}
+
+	gs.scoreLeft, gs.scoreRight = g.status.GetScore()
+	gs.ballX, gs.ballY = g.ball.Position()
+	gs.screenWidth, gs.screenHeight = g.screen.Size()
+	return gs
 }
 
 func (g *Game) CheckBounds(tick int) {
