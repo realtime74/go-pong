@@ -5,6 +5,7 @@ import (
 	"github.com/realtime74/gopong/scr"
 )
 
+var _Color = tcell.NewRGBColor(0, 0, 0)
 var bgColor = tcell.NewRGBColor(100, 116, 139)
 var fgColor = tcell.NewRGBColor(226, 232, 240)
 

@@ -13,6 +13,8 @@ type Game struct {
 
 	lracket *controls.Racket
 	rracket *controls.Racket
+	lWall   controls.Wall
+	rWall   controls.Wall
 
 	ball *controls.Ball
 
@@ -34,6 +36,8 @@ type GameStatus struct {
 type GameOptions struct {
 	computerPlayers int
 	startLevel      int
+	levelCap        int
+	scoreCap        int
 }
 
 func NewGame(screen tcell.Screen, opts GameOptions) Game {
@@ -53,8 +57,14 @@ func NewGame(screen tcell.Screen, opts GameOptions) Game {
 	game.ball.Level = opts.startLevel
 	game.ball.Draw()
 	game.status = *controls.NewStatusLine(screen)
-	game.status.SetLevel(game.ball.Level)
+	game.status.SetLevel(game.ball.Level, false)
 	game.status.Draw()
+	game.lWall = controls.NewWall(screen, 0)
+	game.rWall = controls.NewWall(screen, width-1)
+	game.lWall.Draw()
+	game.rWall.Draw()
+
+	game.ticker = 0
 	game.options = opts
 
 	return game
@@ -97,6 +107,8 @@ func (g *Game) CheckBounds(tick int) {
 	}
 	if leftBounce || rightBounce {
 		g.ball.Bounce(tick, -1, 1)
+		g.lWall.Flash(leftBounce)
+		g.rWall.Flash(rightBounce)
 	}
 	if topBounce || bottomBounce {
 		g.ball.Bounce(tick, 1, -1)
@@ -129,10 +141,18 @@ func (g *Game) _controller() {
 		g.ticker++
 		g.status.SetTicker(g.ticker / 100)
 
+		if g.ball.Level > g.options.levelCap {
+			g.screen.PostEvent(tcell.NewEventKey(tcell.KeyEscape, 0, tcell.ModNone))
+		}
+		ls, rs := g.status.GetScore()
+		if ls >= g.options.scoreCap || rs >= g.options.scoreCap {
+			g.screen.PostEvent(tcell.NewEventKey(tcell.KeyEscape, 0, tcell.ModNone))
+		}
+
 		// level up every 3000 ticks
 		if g.ticker%3000 == 0 {
 			g.ball.Level += 1
-			g.status.SetLevel(g.ball.Level)
+			g.status.SetLevel(g.ball.Level, true)
 		}
 		// Move the ball every 5 ticks (50ms)
 		if g.ticker%5 == 0 {

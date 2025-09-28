@@ -8,6 +8,14 @@ import (
 )
 
 func _loop(game *Game) bool {
+	defer func() {
+		if r := recover(); r != nil {
+			game.screen.Fini()
+			fmt.Fprintf(os.Stderr, "Fatal error: %v\n", r)
+			os.Exit(1)
+		}
+	}()
+
 	game.screen.Show()
 	ev := game.screen.PollEvent()
 	switch ev := ev.(type) {
@@ -46,7 +54,9 @@ func main() {
 
 	options := GameOptions{
 		computerPlayers: 1,
-		startLevel:      3,
+		startLevel:      7,
+		levelCap:        50,
+		scoreCap:        100,
 	}
 
 	for ii, value := range os.Args[1:] {
