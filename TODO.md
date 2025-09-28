@@ -106,8 +106,13 @@
 
 # cleanup
 
-- [ ] commit pending changes from yesterday
-- [ ] cleanup code
+- [x] commit pending changes from yesterday
+- [x] cleanup code
+
+# cmd line arguments
+
+- [ ] set start level
+- [ ] set nr of ai players
 
 # multiplayer concept
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -43,7 +44,25 @@ func main() {
 		Foreground(tcell.ColorWhite)
 	screen.SetStyle(style)
 
-	game := NewGame(screen)
+	options := GameOptions{
+		computerPlayers: 1,
+		startLevel:      3,
+	}
+
+	for ii, value := range os.Args[1:] {
+		switch value {
+		case "-1":
+			options.computerPlayers = 1
+		case "-2":
+			options.computerPlayers = 2
+		case "--level":
+			if len(os.Args) > ii+2 {
+				fmt.Sscanf(os.Args[ii+2], "%d", &options.startLevel)
+			}
+		}
+	}
+
+	game := NewGame(screen, options)
 	game.Start()
 
 	for {

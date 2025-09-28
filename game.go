@@ -18,9 +18,16 @@ type Game struct {
 
 	screen tcell.Screen
 	ticker int
+
+	options GameOptions
 }
 
-func NewGame(screen tcell.Screen) Game {
+type GameOptions struct {
+	computerPlayers int
+	startLevel      int
+}
+
+func NewGame(screen tcell.Screen, opts GameOptions) Game {
 	game := Game{}
 	game.screen = screen
 
@@ -34,67 +41,67 @@ func NewGame(screen tcell.Screen) Game {
 	game.lracket = controls.NewRacket(screen, 1, height/2)
 	game.lracket.Draw()
 	game.ball = controls.NewBall(screen, width/2, height/2)
+	game.ball.Level = opts.startLevel
 	game.ball.Draw()
 	game.status = *controls.NewStatusLine(screen)
 	game.status.SetLevel(game.ball.Level)
 	game.status.Draw()
+	game.options = opts
 
 	return game
 }
 
 func (g *Game) Start() {
 	go g._controller()
-	go ComputerMove(g, g.lracket)
-	go ComputerMove(g, g.rracket)
+	if g.options.computerPlayers > 0 {
+		go ComputerMove(g, g.lracket)
+	}
+	if g.options.computerPlayers > 1 {
+		go ComputerMove(g, g.rracket)
+	}
 }
 
 func (g *Game) CheckBounds(tick int) {
 	width, height := g.screen.Size()
 	x, y := g.ball.NextPosition(g.ticker)
 
-	if x <= 0 {
+	// wall bounce
+	leftBounce := x <= 0
+	rightBounce := x >= width
+	topBounce := y <= 0
+	bottomBounce := y >= height-1
+
+	if leftBounce {
 		g.status.Score(0, 1)
-		if g.ball.Yboost > 1 {
-			g.ball.Yboost -= 1
-		}
-		g.ball.Bounce(tick, -1, 1)
-		return
 	}
-	if x >= width {
+	if rightBounce {
 		g.status.Score(1, 0)
-		if g.ball.Yboost > 1 {
-			g.ball.Yboost -= 1
-		}
-		g.ball.Bounce(tick, -1, 1)
-		return
 	}
-	if y <= 0 || y >= height-1 {
+	if leftBounce || rightBounce {
+		g.ball.Bounce(tick, -1, 1)
+	}
+	if topBounce || bottomBounce {
 		g.ball.Bounce(tick, 1, -1)
+	}
+	if leftBounce || rightBounce || topBounce || bottomBounce {
 		if g.ball.Yboost > 1 {
 			g.ball.Yboost -= 1
 		}
-		return
 	}
 
+	// racket bounce
 	dx, dy := -1, 1
-	if g.rracket.OnRacket(x, y) {
-		if g.ticker-g.rracket.LastMove < 100 {
-			g.ball.Yboost += 5
-		} else {
-			g.ball.Yboost = 1
+	rackets := []*controls.Racket{g.lracket, g.rracket}
+	for _, racket := range rackets {
+		if racket.OnRacket(x, y) {
+			if g.ticker-racket.LastMove < 100 {
+				g.ball.Yboost += 5
+			} else {
+				g.ball.Yboost = 1
+			}
+			g.ball.Bounce(tick, dx, dy)
+			return
 		}
-		g.ball.Bounce(tick, dx, dy)
-		return
-	}
-	if g.lracket.OnRacket(x, y) {
-		dx, dy := -1, 1
-		if g.ticker-g.lracket.LastMove < 100 {
-			g.ball.Yboost += 5
-		} else {
-			g.ball.Yboost = 1
-		}
-		g.ball.Bounce(tick, dx, dy)
-		return
 	}
 }
 
