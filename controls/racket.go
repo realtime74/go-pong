@@ -40,6 +40,7 @@ func (r *Racket) Move(tick int, dy int) {
 		r.y = maxy
 	}
 	r.Draw()
+	r.LastMove = tick
 }
 
 func (r *Racket) OnRacket(x, y int) bool {

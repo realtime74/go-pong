@@ -101,7 +101,27 @@
 
 # leveling
 
+- [x] show level in status bar
+- [x] increase level every 10000 ticks
 
+# cleanup
+
+- [ ] commit pending changes from yesterday
+- [ ] cleanup code
+
+# multiplayer concept
+
+- [ ] think about multiplayer concept
+    - [ ] how to connect players
+
+    - [ ] let user just control one racket
+    - [ ] how to report game state to user?
+
+
+
+
+
+ - add version info
 # idea: pedals???
 
 # later
