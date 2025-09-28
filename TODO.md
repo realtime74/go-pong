@@ -111,15 +111,15 @@
 
 # cmd line arguments
 
-- [ ] set start level
-- [ ] set nr of ai players
+- [x] set start level
+- [x] set nr of ai players
 
 # multiplayer concept
-
-- [ ] think about multiplayer concept
-    - [ ] how to connect players
-
-    - [ ] let user just control one racket
+- [x] think about multiplayer concept
+    - [x] how to connect players
+    - [x] let user just control one racket
+    - [x] create a simple python client to connect to the game server
+    - [ ] let user control up/down with j/k keys
     - [ ] how to report game state to user?
 
 

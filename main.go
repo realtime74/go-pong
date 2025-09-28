@@ -7,7 +7,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 )
 
-func _loop(game Game) bool {
+func _loop(game *Game) bool {
 	game.screen.Show()
 	ev := game.screen.PollEvent()
 	switch ev := ev.(type) {
@@ -64,9 +64,11 @@ func main() {
 
 	game := NewGame(screen, options)
 	game.Start()
+	server := NewRESTServer(&game)
+	server.Start()
 
 	for {
-		if !_loop(game) {
+		if !_loop(&game) {
 			return
 		}
 	}
